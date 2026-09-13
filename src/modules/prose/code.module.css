@@ -1,0 +1,35 @@
+.code:has(:global(.line + .line)) {
+	counter-reset: step;
+	counter-increment: step 0;
+
+	& :global(.line)::before {
+		content: counter(step);
+		counter-increment: step;
+		width: 2ch;
+		margin-right: 2ch;
+		display: inline-block;
+		text-align: right;
+		font-variant: tabular-nums;
+		opacity: 0.2;
+	}
+}
+
+.code :global(.highlight) {
+	position: relative;
+
+	&>* {
+		position: relative;
+		z-index: 1;
+	}
+
+	&:not(:empty)::after {
+		content: '';
+		position: absolute;
+		z-index: 0;
+		inset: 0 -2ch;
+		border-inline-start: 1ch solid var(--highlight-color);
+		background-color: color-mix(in oklab,
+				var(--highlight-color) 20%,
+				transparent);
+	}
+}
